@@ -9,7 +9,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     $database = new Database();
     $db = $database->getConnection();
 
-    $target_dir = "D:\Skolepraktik\menu-vue\public\images/";
+    //Skal ændres til hvor projektet ligger
+    $target_dir = "C:\Users\Daniel-lånepc\Documents\Daniel\Projekter\MenuStander\Menu-vue\public\images/";
     $target_file = $target_dir . basename($_FILES["image"]["name"]);
     $uploadOk = 1;
     $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));

@@ -11,7 +11,7 @@ if(!empty($_POST['status']))
 
     $status = $_POST['status'];
 
-    $query = "INSERT INTO kantine (Status) VALUES ('$status')";
+    $query = "UPDATE kantine SET Status = '$status'";
 
     //Forbereder query statment for at checke at den er en valid query
     $stmt = $db->prepare($query);

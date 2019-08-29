@@ -52,9 +52,15 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
         $friday = null;
     }
 
+    $mondaycheck = $_POST['mondaycheck'];
+    $tuesdaycheck = $_POST['tuesdaycheck'];
+    $wednesdaycheck = $_POST['wednesdaycheck'];
+    $thursdaycheck = $_POST['thursdaycheck'];
+    $fridaycheck = $_POST['fridaycheck'];
+
     //Laver en query statment med det som skal sættes ind i databasen
-    $query = " INSERT INTO weekmenus (monday, tuesday, wednesday, thursday, friday) 
-                VALUES ('$monday', '$tuesday', '$wednesday', '$thursday', '$friday') ";
+    $query = " INSERT INTO weekmenus (monday, tuesday, wednesday, thursday, friday, mondaycheck, tuesdaycheck, wednesdaycheck, thursdaycheck, fridaycheck) 
+                VALUES ('$monday', '$tuesday', '$wednesday', '$thursday', '$friday', '$mondaycheck', '$tuesdaycheck', '$wednesdaycheck', '$thursdaycheck', '$fridaycheck') ";
     
     
     //Forbereder query statment for at checke at den er en valid query
