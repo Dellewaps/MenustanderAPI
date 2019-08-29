@@ -1,8 +1,8 @@
 -- --------------------------------------------------------
--- Vært:                         localhost
--- Server-version:               5.7.19 - MySQL Community Server (GPL)
--- ServerOS:                     Win64
--- HeidiSQL Version:             9.4.0.5125
+-- Host:                         localhost
+-- Server version:               5.7.24 - MySQL Community Server (GPL)
+-- Server OS:                    Win64
+-- HeidiSQL Version:             10.2.0.5599
 -- --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -16,56 +16,79 @@
 CREATE DATABASE IF NOT EXISTS `menustander` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_bin */;
 USE `menustander`;
 
--- Dumping structure for tabel menustander.dailies
+-- Dumping structure for table menustander.dailies
 CREATE TABLE IF NOT EXISTS `dailies` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `sideone` int(11) DEFAULT NULL,
   `sidetwo` int(11) DEFAULT NULL,
   `sidethree` int(11) DEFAULT NULL,
   `sidefour` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+  PRIMARY KEY (`id`),
+  KEY `sideoneFK` (`sideone`),
+  KEY `sidetwoFK` (`sidetwo`),
+  KEY `sidethreeFK` (`sidethree`),
+  KEY `sidefourFK` (`sidefour`),
+  CONSTRAINT `sidefourFK` FOREIGN KEY (`sidefour`) REFERENCES `side_dishes` (`id`) ON DELETE SET NULL ON UPDATE NO ACTION,
+  CONSTRAINT `sideoneFK` FOREIGN KEY (`sideone`) REFERENCES `side_dishes` (`id`) ON DELETE SET NULL ON UPDATE NO ACTION,
+  CONSTRAINT `sidethreeFK` FOREIGN KEY (`sidethree`) REFERENCES `side_dishes` (`id`) ON DELETE SET NULL ON UPDATE NO ACTION,
+  CONSTRAINT `sidetwoFK` FOREIGN KEY (`sidetwo`) REFERENCES `side_dishes` (`id`) ON DELETE SET NULL ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
--- Dumping data for table menustander.dailies: ~4 rows (approximately)
+-- Dumping data for table menustander.dailies: ~2 rows (approximately)
+DELETE FROM `dailies`;
 /*!40000 ALTER TABLE `dailies` DISABLE KEYS */;
 INSERT INTO `dailies` (`id`, `description`, `sideone`, `sidetwo`, `sidethree`, `sidefour`) VALUES
-	(3, 'med ris', 1, 2, NULL, NULL),
-	(4, 'med ris', 2, 1, NULL, NULL),
-	(5, 'med sovs', 1, 2, NULL, NULL),
-	(6, 'sovs', 1, 0, 0, 0),
-	(7, 'kartoffler, rødkålog brun sovs', 0, 0, 0, 0);
+	(1, 'kartoffler, rødbeder og persillesovs', 2, 3, 4, 1),
+	(2, 'med ris', 2, 4, 5, 1);
 /*!40000 ALTER TABLE `dailies` ENABLE KEYS */;
 
--- Dumping structure for tabel menustander.dishes
+-- Dumping structure for table menustander.dishes
 CREATE TABLE IF NOT EXISTS `dishes` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `accessories` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `price` int(11) NOT NULL,
   `photo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
--- Dumping data for table menustander.dishes: ~4 rows (approximately)
+-- Dumping data for table menustander.dishes: ~6 rows (approximately)
+DELETE FROM `dishes`;
 /*!40000 ALTER TABLE `dishes` DISABLE KEYS */;
 INSERT INTO `dishes` (`id`, `name`, `accessories`, `price`, `photo`) VALUES
-	(1, 'Stegt flæsk', 'kartoffler, rødbeder og persillesovs', 25, '_1557387950.jpg'),
-	(2, 'Frikadeller', 'kartoffler, rødkålog brun sovs', 20, '_1557388004.jpg'),
-	(3, 'ribbensandwich', 'rødkål og syltede agurker', 25, '_1557388041.jpg'),
-	(4, 'Mørbradgryde', 'med ris', 20, '_1557388062.jpg'),
-	(8, 'Kyllingelår', 'Tomatsovs', 20, '2732_630x315.jpg');
+	(1, 'ingen ret', 'ingen ret', 0, 'lukket.jpg'),
+	(2, 'Stegt flæsk', 'kartoffler, rødbeder og persillesovs', 25, '_1557387950.jpg'),
+	(3, 'Frikadeller', 'kartoffler, rødkålog brun sovs', 20, '_1557388004.jpg'),
+	(4, 'ribbensandwich', 'rødkål og syltede agurker', 25, '_1557388041.jpg'),
+	(5, 'Mørbradgryde', 'med ris', 20, '_1557388062.jpg'),
+	(6, 'Kyllingelår', 'Tomatsovs', 20, '2732_630x315.jpg');
 /*!40000 ALTER TABLE `dishes` ENABLE KEYS */;
 
--- Dumping structure for tabel menustander.migrations
+-- Dumping structure for table menustander.kantine
+CREATE TABLE IF NOT EXISTS `kantine` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `Status` int(11) NOT NULL,
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+-- Dumping data for table menustander.kantine: ~1 rows (approximately)
+DELETE FROM `kantine`;
+/*!40000 ALTER TABLE `kantine` DISABLE KEYS */;
+INSERT INTO `kantine` (`Id`, `Status`) VALUES
+	(1, 2);
+/*!40000 ALTER TABLE `kantine` ENABLE KEYS */;
+
+-- Dumping structure for table menustander.migrations
 CREATE TABLE IF NOT EXISTS `migrations` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Dumping data for table menustander.migrations: ~6 rows (approximately)
+DELETE FROM `migrations`;
 /*!40000 ALTER TABLE `migrations` DISABLE KEYS */;
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 	(12, '2014_10_12_000000_create_users_table', 1),
@@ -76,7 +99,25 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 	(17, '2019_05_08_063234_create_dailies_table', 1);
 /*!40000 ALTER TABLE `migrations` ENABLE KEYS */;
 
--- Dumping structure for tabel menustander.password_resets
+-- Dumping structure for table menustander.opentimes
+CREATE TABLE IF NOT EXISTS `opentimes` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `open` time NOT NULL,
+  `closed` time NOT NULL,
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+-- Dumping data for table menustander.opentimes: ~4 rows (approximately)
+DELETE FROM `opentimes`;
+/*!40000 ALTER TABLE `opentimes` DISABLE KEYS */;
+INSERT INTO `opentimes` (`Id`, `open`, `closed`) VALUES
+	(1, '08:00:00', '08:30:00'),
+	(2, '09:00:00', '10:15:00'),
+	(3, '11:30:00', '11:35:00'),
+	(4, '13:30:00', '14:00:00');
+/*!40000 ALTER TABLE `opentimes` ENABLE KEYS */;
+
+-- Dumping structure for table menustander.password_resets
 CREATE TABLE IF NOT EXISTS `password_resets` (
   `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -85,24 +126,27 @@ CREATE TABLE IF NOT EXISTS `password_resets` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Dumping data for table menustander.password_resets: ~0 rows (approximately)
+DELETE FROM `password_resets`;
 /*!40000 ALTER TABLE `password_resets` DISABLE KEYS */;
 /*!40000 ALTER TABLE `password_resets` ENABLE KEYS */;
 
--- Dumping structure for tabel menustander.side_dishes
+-- Dumping structure for table menustander.side_dishes
 CREATE TABLE IF NOT EXISTS `side_dishes` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
--- Dumping data for table menustander.side_dishes: ~4 rows (approximately)
+-- Dumping data for table menustander.side_dishes: ~5 rows (approximately)
+DELETE FROM `side_dishes`;
 /*!40000 ALTER TABLE `side_dishes` DISABLE KEYS */;
 INSERT INTO `side_dishes` (`id`, `name`, `description`) VALUES
-	(1, 'Sandwich', 'kylling og bacon'),
+	(1, 'Ingen', 'Ingen'),
 	(2, 'Sandwich', 'med rostbeef'),
 	(3, 'sandwich', 'Tun'),
-	(4, 'sandwich', 'pulledpork');
+	(4, 'sandwich', 'pulledpork'),
+	(5, 'Sandwich', 'kylling og bacon');
 /*!40000 ALTER TABLE `side_dishes` ENABLE KEYS */;
 
 -- Dumping structure for procedure menustander.sp_daily
@@ -143,41 +187,54 @@ select * from dishes d where d.id = (select friday from weekmenus ORDER BY weekm
 END//
 DELIMITER ;
 
--- Dumping structure for tabel menustander.users
+-- Dumping structure for table menustander.users
 CREATE TABLE IF NOT EXISTS `users` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table menustander.users: ~1 rows (approximately)
+-- Dumping data for table menustander.users: ~0 rows (approximately)
+DELETE FROM `users`;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 INSERT INTO `users` (`id`, `name`, `password`) VALUES
 	(3, 'test', '$2y$10$lVrPXrOo.g/Om1Os2CicteoLoxaClbgTYVeWsq5Wfm/nHsUD6cWCi');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 
--- Dumping structure for tabel menustander.weekmenus
+-- Dumping structure for table menustander.weekmenus
 CREATE TABLE IF NOT EXISTS `weekmenus` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `monday` int(11) NOT NULL,
   `tuesday` int(11) NOT NULL,
   `wednesday` int(11) NOT NULL,
   `thursday` int(11) NOT NULL,
   `friday` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `mondaycheck` int(11) NOT NULL DEFAULT '1',
+  `tuesdaycheck` int(11) NOT NULL DEFAULT '1',
+  `wednesdaycheck` int(11) NOT NULL DEFAULT '1',
+  `thursdaycheck` int(11) NOT NULL DEFAULT '1',
+  `fridaycheck` int(11) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`id`),
+  KEY `mondayFK` (`monday`),
+  KEY `tuesdayFK` (`tuesday`),
+  KEY `wednesdayFK` (`wednesday`),
+  KEY `thursdayFK` (`thursday`),
+  KEY `fridayFK` (`friday`),
+  CONSTRAINT `fridayFK` FOREIGN KEY (`friday`) REFERENCES `dishes` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `mondayFK` FOREIGN KEY (`monday`) REFERENCES `dishes` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `thursdayFK` FOREIGN KEY (`thursday`) REFERENCES `dishes` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `tuesdayFK` FOREIGN KEY (`tuesday`) REFERENCES `dishes` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `wednesdayFK` FOREIGN KEY (`wednesday`) REFERENCES `dishes` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Dumping data for table menustander.weekmenus: ~2 rows (approximately)
+DELETE FROM `weekmenus`;
 /*!40000 ALTER TABLE `weekmenus` DISABLE KEYS */;
-INSERT INTO `weekmenus` (`id`, `monday`, `tuesday`, `wednesday`, `thursday`, `friday`) VALUES
-	(1, 2, 1, 2, 1, 2),
-	(2, 1, 1, 2, 1, 1),
-	(3, 2, 1, 1, 2, 1),
-	(4, 1, 2, 3, 4, 5),
-	(5, 1, 2, 3, 4, 1),
-	(6, 3, 4, 2, 1, 1);
+INSERT INTO `weekmenus` (`id`, `monday`, `tuesday`, `wednesday`, `thursday`, `friday`, `mondaycheck`, `tuesdaycheck`, `wednesdaycheck`, `thursdaycheck`, `fridaycheck`) VALUES
+	(1, 6, 5, 1, 4, 2, 1, 1, 1, 1, 1),
+	(3, 2, 3, 5, 1, 2, 1, 1, 1, 1, 1);
 /*!40000 ALTER TABLE `weekmenus` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
