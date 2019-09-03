@@ -19,7 +19,6 @@ $stmt2 = $db->prepare($query2);
         $num = $stmt->rowCount();
         if ($num > 0) {
             $open_arr["open"] = 1;
-            
         } else {
             $open_arr["open"] = 0;
             while ($row = $stmt2->fetch(PDO::FETCH_ASSOC)) {
@@ -29,9 +28,11 @@ $stmt2 = $db->prepare($query2);
                     "open" => $open,
                     "closed" => $closed,
                 );
+                
                 // Tager dataet og pusher til det array som blev lavet til at store selve datasættet
                 array_push($open_arr["records"], $open_item);
             }
+            
         }
         
         http_response_code(200);

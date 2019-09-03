@@ -7,24 +7,27 @@ header("Content-Type: application/json; charset=UTF-8");
 $database = new Database();
 $db = $database->getConnection();
 
-$query = "SELECT Status FROM kantine ORDER BY Id DESC LIMIT 1";
+$query = "SELECT * FROM weekmenus ORDER BY weekmenus.id desc limit 1";
 $stmt = $db->prepare($query);
     try{
-        $stmt->execute();        
-        $kantine=array();
-        $kantine["records"]=array();
+        $stmt->execute();
+        $open_arr=array();
+        $open_arr["records"]=array();
         while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
             extract($row);
-            $kantinestatus=array(
-                "Status" => $Status,
+            $open_item=array(
+                "mondaycheck" => $mondaycheck,
+                "tuesdaycheck" => $tuesdaycheck,
+                "wednesdaycheck" => $wednesdaycheck,
+                "thursdaycheck" => $thursdaycheck,
+                "fridaycheck" => $fridaycheck
             );
             // Tager dataet og pusher til det array som blev lavet til at store selve datasættet
-            array_push($kantine["records"], $kantinestatus);
+            array_push($open_arr["records"], $open_item);
         }
         http_response_code(200);
-        $JSON = json_encode($kantine);
+        $JSON = json_encode($open_arr);
         print_r($JSON);
     } catch(PDOException $e){
         return($e);
     }
-?>
