@@ -3,10 +3,11 @@ include_once ("../database.inc");
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 
-//Laver en connection til databasen og sætter den til en lokal variabel
+// Laver en connection til databasen og sætter den til en lokal variabel
 $database = new Database();
 $db = $database->getConnection();
 
+// Laver en query statment med det som skal hentes fra databasen
 $query = "SELECT * FROM side_dishes";
 $stmt = $db->prepare($query);
     try{

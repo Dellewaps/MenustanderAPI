@@ -3,21 +3,21 @@ include_once ("../database.inc");
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 
-//Ser efter om den requst der bliver sendt er en POST request
+// Ser efter om den requst der bliver sendt er en POST request
 if($_SERVER["REQUEST_METHOD"] == "POST"){
-    //Laver en connection til databasen og sætter den til en lokal variabel
+    // Laver en connection til databasen og sætter den til en lokal variabel
     $database = new Database();
     $db = $database->getConnection();
 
 
-    //Sætter variabler til at være de informationer der kommer fra $post requster
+    // Sætter variabler til at være de informationer der kommer fra $post requster
     $name = $_POST['name'];
     $plainpass = $_POST['password'];
 
     $selectquery = "SELECT password FROM users WHERE name = '$name';"; 
     
 
-    //Forbereder query statment for at checke at den er en valid query
+    // Forbereder query statment for at checke at den er en valid query
     $stmt = $db->prepare($selectquery);
         // Prøver at execute statement queriet for at se om der bliver meldt fejl af databasen
         try {

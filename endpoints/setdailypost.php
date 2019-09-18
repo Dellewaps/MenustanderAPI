@@ -6,12 +6,12 @@ header("Content-Type: application/json; charset=UTF-8");
 //Ser efter om den requst der bliver sendt er en POST request
 if($_SERVER["REQUEST_METHOD"] == "POST")
 {
-    //Laver en connection til databasen og sætter den til en lokal variabel
+    // Laver en connection til databasen og sætter den til en lokal variabel
     $database = new Database();
     $db = $database->getConnection();
 
     
-    //Sætter variabler til at være de informationer der kommer fra $post requster
+    // Sætter variabler til at være de informationer der kommer fra $post requster
     if(isset($_POST['sideone']))
     {
         $sideone = (int)$_POST['sideone'];
@@ -48,12 +48,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
 
     
 
-    //Laver en query statment med det som skal sættes ind i databasen
+    // Laver en query statment med det som skal sættes ind i databasen
     $query = " INSERT INTO dailies (description, sideone, sidetwo, sidethree, sidefour) 
                 VALUES ('$description', '$sideone', '$sidetwo', '$sidethree', '$sidefour') ";
     
     
-    //Forbereder query statment for at checke at den er en valid query
+    // Forbereder query statment for at checke at den er en valid query
     $stmt = $db->prepare($query);
         // Prøver at execute statement queriet for at se om der bliver meldt fejl af databasen
         try {

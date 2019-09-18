@@ -7,6 +7,7 @@ header("Content-Type: application/json; charset=UTF-8");
 $database = new Database();
 $db = $database->getConnection();
 
+// Laver en query statment med det som skal hentes fra databasen
 $query = "SELECT * FROM dishes";
 $stmt = $db->prepare($query);
     try{

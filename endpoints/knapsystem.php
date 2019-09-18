@@ -5,15 +5,16 @@ header("Content-Type: application/json; charset=UTF-8");
 
 if(!empty($_POST['status']))
 {
-    //Laver en connection til databasen og sætter den til en lokal variabel
+    // Laver en connection til databasen og sætter den til en lokal variabel
     $database = new Database();
     $db = $database->getConnection();
 
     $status = $_POST['status'];
 
+    // Laver en query statment med det som skal opdateres i databasen
     $query = "UPDATE kantine SET Status = '$status'";
 
-    //Forbereder query statment for at checke at den er en valid query
+    // Forbereder query statment for at checke at den er en valid query
     $stmt = $db->prepare($query);
         // Prøver at execute statement queriet for at se om der bliver meldt fejl af databasen
         try {

@@ -3,11 +3,12 @@ include_once ("../database.inc");
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 
-//Laver en connection til databasen og sætter den til en lokal variabel
+// Laver en connection til databasen og sætter den til en lokal variabel
 $database = new Database();
 $db = $database->getConnection();
 $weekdays = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday'];
 
+// Laver en query statment med det som skal hentes fra databasen
 $query = "SELECT * FROM weekmenus ORDER BY id DESC LIMIT 1";
 $stmt = $db->prepare($query);
     try{
@@ -21,11 +22,10 @@ $stmt = $db->prepare($query);
                 $menu_item=array(
                     $weekdays[$i] => $row[$weekdays[$i].'check']
                 );
+                // Tager dataet og pusher til det array som blev lavet til at store selve datasættet
                 array_push($menu_arr["records"], $menu_item);
                 $i++;
             }
-            
-            
         }
         http_response_code(200);
         $JSON = json_encode($menu_arr);

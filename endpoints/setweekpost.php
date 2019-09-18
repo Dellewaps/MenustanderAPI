@@ -3,15 +3,15 @@ include_once ("../database.inc");
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 
-//Ser efter om den requst der bliver sendt er en POST request
+// Ser efter om den requst der bliver sendt er en POST request
 if($_SERVER["REQUEST_METHOD"] == "POST")
 {
-    //Laver en connection til databasen og sætter den til en lokal variabel
+    // Laver en connection til databasen og sætter den til en lokal variabel
     $database = new Database();
     $db = $database->getConnection();
 
     
-    //Sætter variabler til at være de informationer der kommer fra $post requster
+    // Sætter variabler til at være de informationer der kommer fra $post requster
     if(isset($_POST['monday']))
     {
         $monday = (int)$_POST['monday'];
@@ -58,12 +58,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
     $thursdaycheck = $_POST['thursdaycheck'];
     $fridaycheck = $_POST['fridaycheck'];
 
-    //Laver en query statment med det som skal sættes ind i databasen
+    // Laver en query statment med det som skal sættes ind i databasen
     $query = " INSERT INTO weekmenus (monday, tuesday, wednesday, thursday, friday, mondaycheck, tuesdaycheck, wednesdaycheck, thursdaycheck, fridaycheck) 
                 VALUES ('$monday', '$tuesday', '$wednesday', '$thursday', '$friday', '$mondaycheck', '$tuesdaycheck', '$wednesdaycheck', '$thursdaycheck', '$fridaycheck') ";
     
     
-    //Forbereder query statment for at checke at den er en valid query
+    // Forbereder query statment for at checke at den er en valid query
     $stmt = $db->prepare($query);
         // Prøver at execute statement queriet for at se om der bliver meldt fejl af databasen
         try {

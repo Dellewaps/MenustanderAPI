@@ -3,10 +3,11 @@ include_once("../database.inc");
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 
-//Laver en connection til databasen og sætter den til en lokal variabel
+// Laver en connection til databasen og sætter den til en lokal variabel
 $database = new Database();
 $db = $database->getConnection();
 
+// Laver to query statments med det som skal hentes fra databasen
 $query = "SELECT * FROM opentimes WHERE open < NOW() && closed > NOW()";
 $query2 = "SELECT * FROM opentimes WHERE open > NOW() ORDER BY Id ASC LIMIT 1;";
 $stmt = $db->prepare($query);
@@ -28,13 +29,10 @@ $stmt2 = $db->prepare($query2);
                     "open" => $open,
                     "closed" => $closed,
                 );
-                
                 // Tager dataet og pusher til det array som blev lavet til at store selve datasættet
                 array_push($open_arr["records"], $open_item);
             }
-            
         }
-        
         http_response_code(200);
         $JSON = json_encode($open_arr);
         print_r($JSON);
